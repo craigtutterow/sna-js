@@ -1,0 +1,5 @@
+Features to add to network analysis:
+
+1. Industry diversity index
+
+2. Ordered list of top 5 contacts in eigenvector centrality
