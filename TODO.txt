@@ -3,3 +3,7 @@ Features to add to network analysis:
 1. Industry diversity index
 
 2. Ordered list of top 5 contacts in eigenvector centrality
+
+3. Add sharing feature for social media integration.
+
+4. Allow users to download their network data.
