@@ -69,18 +69,22 @@ function onLinkedInLogin() {
 //process data and produce csv file of adjacency matrix for user download
 function dataReady(resultData) {
     console.log(JSON.stringify(resultData));
-    var myData='"me",';
+   var myData='"",'+ '"me",';
+    console.log(resultData.connections.length);
     for (var i=0; i<resultData.connections.length; i++) {
         var n1= '"'+resultData.connections[i].firstName + " " + resultData.connections[i].lastName + '"' + ",";
         myData=myData+n1;
     }
     myData = myData.substring(0, myData.length - 1);
-    myData = myData + "\n";
-    var myDataMat = JSON.stringify(resultData.matrix);
-    myDataMat = myDataMat.replace('[[','');
-    myDataMat = myDataMat.replace(']]','');
-    myDataMat = myDataMat.replace(/\],\[/g,'\n');
-    myData = myData + myDataMat;
+    myData = myData + "\n" + '"'+ "me" + '"' + JSON.stringify(resultData.matrix[0]);
+    console.log(resultData.matrix.length);
+    console.log(resultData.connections[2].firstName + JSON.stringify(resultData.matrix[2]));
+    for (var i=0; i<resultData.connections.length; i++) {
+        var n1= '"'+resultData.connections[i].firstName + " " + resultData.connections[i].lastName + '"' + JSON.stringify(resultData.matrix[i+1]);
+        myData=myData+n1;
+    }
+    myData = myData.replace(/\[/g,',');
+    myData = myData.replace(/\]/g,'\n');
     console.log(myData);
     var contentType = 'text/csv';
     var csvFile = new Blob([myData], {type: contentType});
