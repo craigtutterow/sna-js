@@ -18,5 +18,5 @@ Methods for interacting with LinkedIn API to gather network data for display, an
 ###sna-js.js:
 Takes in 2D adjacency matrix from socilab-linkedin.js and performs egocentric network calculations for social network analysis.
 
-#### Author
-Craig Tutterow, 2013
+
+--*Craig Tutterow*
