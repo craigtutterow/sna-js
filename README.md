@@ -7,8 +7,6 @@ You can see it in use at: http://socilab.com, a social network utility that allo
 
 I am actively developing this as users request more features and would appreciate your help if this is a topic that interests you.
 
--*Craig Tutterow*
-
 LinkedIn
 ------
 ###d3js-linkedin.js:
@@ -19,3 +17,6 @@ Methods for interacting with LinkedIn API to gather network data for display, an
 
 ###sna-js.js:
 Takes in 2D adjacency matrix from socilab-linkedin.js and performs egocentric network calculations for social network analysis.
+
+#### Author
+Craig Tutterow, 2013
