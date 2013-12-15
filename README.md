@@ -5,7 +5,7 @@ This repository contains javascript code that interact with **social network API
 
 You can see it in use at: http://socilab.com, a social network utility that allows users to visualize, analyze, and download data on their LinkedIn network.
 
-I am actively developing this as users request more features and would really appreciate your help if this is a topic that interests you. Thanks and enjoy.
+I am actively developing this as users request more features and would appreciate your help if this is a topic that interests you.
 
 -*Craig Tutterow*
 
