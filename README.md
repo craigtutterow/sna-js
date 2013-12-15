@@ -1,7 +1,7 @@
 sna-js
 ======
 
-This repository contains javascript code that interact with **social network APIs**, generate **D3.js visualizations**, and calculate relevant metrics for **social network analysis**. 
+This repository contains javascript code that interact with *social network APIs*, generate *D3.js visualizations*, and *calculate relevant metrics* for **social network analysis**. 
 
 You can see it in use at: http://socilab.com. Socilab is a social network utility that allows users to visualize, analyze, and download data on their LinkedIn network.
 
