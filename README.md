@@ -15,7 +15,7 @@ LinkedIn
 A dynamic and interactive visualization of a user's LinkedIn network using the d3js library, with options to enable/disable connections to ego and color nodes by industry.
 
 ###socilab-linkedin.js:
-Methods for interfacing with LinkedIn API to gather network data for display, analysis, and download by user.
+Methods for interacting with LinkedIn API to gather network data for display, analysis, and download by user.
 
 ###sna-js.js:
 Takes in 2D adjacency matrix from socilab-linkedin.js and performs egocentric network calculations for social network analysis.
