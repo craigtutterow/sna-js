@@ -71,16 +71,16 @@ function dataReady(resultData) {
     console.log(JSON.stringify(resultData));
    var myData='"",'+ '"me",';
     console.log(resultData.connections.length);
-    for (var i=0; i<resultData.connections.length; i++) {
-        var n1= '"'+resultData.connections[i].firstName + " " + resultData.connections[i].lastName + '"' + ",";
+    for (var i=0; i<resultData.publicConnections.length; i++) {
+        var n1= '"'+resultData.publicConnections[i].firstName + " " + resultData.publicConnections[i].lastName + '"' + ",";
         myData=myData+n1;
     }
     myData = myData.substring(0, myData.length - 1);
     myData = myData + "\n" + '"'+ "me" + '"' + JSON.stringify(resultData.matrix[0]);
     console.log(resultData.matrix.length);
-    console.log(resultData.connections[2].firstName + JSON.stringify(resultData.matrix[2]));
-    for (var i=0; i<resultData.connections.length; i++) {
-        var n1= '"'+resultData.connections[i].firstName + " " + resultData.connections[i].lastName + '"' + JSON.stringify(resultData.matrix[i+1]);
+    console.log(resultData.publicConnections[2].firstName + JSON.stringify(resultData.matrix[2]));
+    for (var i=0; i<resultData.publicConnections.length; i++) {
+        var n1= '"'+resultData.publicConnections[i].firstName + " " + resultData.publicConnections[i].lastName + '"' + JSON.stringify(resultData.matrix[i+1]);
         myData=myData+n1;
     }
     myData = myData.replace(/\[/g,',');
