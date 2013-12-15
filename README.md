@@ -20,4 +20,4 @@ Takes in 2D adjacency matrix from socilab-linkedin.js and performs egocentric ne
 
 
 ----
-*Craig Tutterow*
+**Author**: *Craig Tutterow*
