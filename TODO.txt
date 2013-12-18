@@ -9,3 +9,4 @@ Features to add to visualization:
 1. Node sizing by ego's dependence (proportional tie strength or eigenvector centrality of a given node)
 2. Coloring by community detection algorithm (detect clusters of contacts with high density - e.g. colleagues at different companies, classmates, friends from civic organization, etc.)
 3. Add static sharing feature for social media integration.
+4. Add option to remove names.
