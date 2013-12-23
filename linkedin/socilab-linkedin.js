@@ -69,31 +69,53 @@ function onLinkedInLogin() {
 //process data and produce csv file of adjacency matrix for user download
 function dataReady(resultData) {
     console.log(JSON.stringify(resultData));
-   var myData='"",'+ '"me",';
+    console.log(JSON.stringify(resultData.connections[2].firstName + " " + resultData.connections[2].lastName));
+    var myData='"",'+ '"Me",';
     console.log(resultData.connections.length);
+    var nverts=resultData.connections.length+1;
+    var myPajData='*Vertices '+ nverts.toString() + "\n" + '1 "Me"' + "\n";
     for (var i=0; i<resultData.publicConnections.length; i++) {
-        var n1= '"'+resultData.publicConnections[i].firstName + " " + resultData.publicConnections[i].lastName + '"' + ",";
-        myData=myData+n1;
+        var n1= '"'+resultData.publicConnections[i].firstName + " " + resultData.publicConnections[i].lastName + '"';
+        myData=myData+n1+",";
+        var ip=i+2;
+        myPajData=myPajData+ip.toString()+" "+n1+'\n';
     }
     myData = myData.substring(0, myData.length - 1);
-    myData = myData + "\n" + '"'+ "me" + '"' + JSON.stringify(resultData.matrix[0]);
+    myData = myData + "\n" + '"'+ "Me" + '"' + JSON.stringify(resultData.matrix[0]);
+    myPajData = myPajData + '*Edges' + "\n";
     console.log(resultData.matrix.length);
-    console.log(resultData.publicConnections[2].firstName + JSON.stringify(resultData.matrix[2]));
+    console.log(resultData.publicConnections[2].firstName + JSON.stringify(resultData.matrix[2][3]));
     for (var i=0; i<resultData.publicConnections.length; i++) {
-        var n1= '"'+resultData.publicConnections[i].firstName + " " + resultData.publicConnections[i].lastName + '"' + JSON.stringify(resultData.matrix[i+1]);
+        var ip=i+1;
+        var n1= '"'+resultData.publicConnections[i].firstName + " " + resultData.publicConnections[i].lastName + '"' + JSON.stringify(resultData.matrix[ip]);
         myData=myData+n1;
+        for(var j=i; j<resultData.matrix.length; j++){
+            if(resultData.matrix[i][j]==1){
+                var jp=j+1;
+                myPajData=myPajData+ip.toString()+" "+jp.toString() + "\n";
+            }
+        }
     }
     myData = myData.replace(/\[/g,',');
     myData = myData.replace(/\]/g,'\n');
     console.log(myData);
+    console.log(myPajData);
+    document.getElementById('download').innerHTML="Download my data: <br>";
     var csvContent = myData;
     var encodedUri = encodeURI(csvContent);
-    var link = document.createElement("a");
-    link.setAttribute("href", "data:text/csv;charset=utf-8,\uFEFF" + encodedUri);
-    link.setAttribute("download","my-li-data.csv");
-    link.setAttribute("target", "_blank");
-    link.textContent = 'Download my Network Data (as adjacency matrix)';
-    document.getElementById('download').appendChild(link);
+    var csvlink = document.createElement("a");
+    csvlink.setAttribute("href", "data:text/csv;charset=utf-8,\uFEFF" + encodedUri);
+    csvlink.setAttribute("download","li-data.csv");
+    csvlink.textContent = '[CSV adjacency matrix]';
+    document.getElementById('download').appendChild(csvlink);
+    var pajData = myPajData;
+    var encodedUri2 = encodeURI(pajData);
+    var pajlink = document.createElement("a");
+    pajlink.setAttribute("href", "data:text/net;charset=utf-8,\uFEFF" + encodedUri2);
+    pajlink.setAttribute("download","li-data.net");
+    pajlink.textContent = ' [Pajek .net edge list]';
+    document.getElementById('download').appendChild(pajlink);
+
     currentData = resultData;
     processMatrix(resultData.matrix);
     visualizeConnections(resultData, enableConnectionsToSelf, colorization);
