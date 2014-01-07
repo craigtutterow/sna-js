@@ -3,6 +3,7 @@ Features to add to network analysis:
 1. Industry diversity index
 2. Ordered list of top 5 contacts in eigenvector centrality
 3. Add sharing feature for social media integration.
+4. Add pdf download feature.
 
 Features to add to visualization:
 
@@ -10,3 +11,4 @@ Features to add to visualization:
 2. Coloring by community detection algorithm (detect clusters of contacts with high density - e.g. colleagues at different companies, classmates, friends from civic organization, etc.)
 3. Add static sharing feature for social media integration.
 4. Add option to remove names.
+5. Reduce spring values to fit all nodes within canvas for users with >400 contacts.
