@@ -5,6 +5,7 @@ Features to add to network analysis:
 3. Add sharing feature for social media integration.
 4. Add pdf download feature.
 5. Error message once throttled.
+6. Format download according to visualization option (connections to self included/excluded).
 
 Features to add to visualization:
 
