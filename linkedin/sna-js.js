@@ -97,6 +97,7 @@ function structuralholes(Z) {
     var esize = 0;
     var csize = 0;
     var density = 0;
+    var realdensity = 0;
     var hierarchy = 0;
     var maxedges = (aalen - 1) * (aalen - 2) * 2;
     for (var j = 1; j < aalen; j++) {
@@ -115,10 +116,11 @@ function structuralholes(Z) {
     }
     csize = csize * 100;
     density = density * 100;
+    realdensity=totedges/((aalen-1)*(aalen-2))/2*100;
     hierarchy = hierarchy * 100;
     constraint = csize + density + hierarchy;
     var asize = aalen - 1;
-    var Csdhe = { constraint: constraint, csize: csize, density: density, hierarchy: hierarchy, esize: esize, asize: asize};
+    var Csdhe = { constraint: constraint, csize: csize, density: density, hierarchy: hierarchy, esize: esize, asize: asize, realdensity: realdensity};
     return Csdhe;
 }
 
@@ -134,7 +136,7 @@ function processMatrix(matrix) {
     ;
     document.getElementById('asize_output').innerHTML = 
         "<b><font size=6.5px>" + holes.asize.toString() + "</b></font>" +
-        "; This is the total number of contacts you have. It is not as informative as your unique (or 'effective') ties. The quality of your network isn't just about the total number of people you know, but the information, opportunities, and social support they provide. These factors are correlated with the structure of the ties between your contacts, not just their raw number. <br><b>Note</b>: LinkedIn's API limits us to 500 contact calls. For anyone with more than 500 contacts, this value will be capped at that level.<br>" 
+        "; This is the total number of contacts you have. It is not as informative as your unique (or 'effective') ties. The quality of your network isn't just about the total number of people you know, but the information, opportunities, and social support they provide. These factors are correlated with the structure of the ties between your contacts, not just their raw number.<br>" 
             + "<br>"
     ;
     document.getElementById('esize_output').innerHTML = 
@@ -148,7 +150,7 @@ function processMatrix(matrix) {
             + "<br>"
     ;
     document.getElementById('density_output').innerHTML = 
-        "<b><font size=6.5px>" + holes.density.toFixed(2) + "</b></font>" +
+        "<b><font size=6.5px>" + holes.realdensity.toFixed(2) + "</b></font>" +
         "/100; This is a percentage that represents the number of ties between your contacts divided by the total number of possible ties (i.e. how 'dense' or closed your network is). As the number approaches 100, it means that all of your contacts know each other. As it approaches 0, it means all of your contacts are disconnected from each other. This can be good or bad depending on the task and social environment.<br>"
             + "<br>"
     ;
