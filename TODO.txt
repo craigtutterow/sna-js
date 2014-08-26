@@ -6,6 +6,8 @@ Features to add to network analysis:
 4. Add pdf download feature.
 5. Error message once throttled.
 6. Format download according to visualization option (connections to self included/excluded).
+7. Add betweenness measure.
+8. Add attributes file.
 
 Features to add to visualization:
 
@@ -14,3 +16,6 @@ Features to add to visualization:
 3. Add static sharing feature for social media integration.
 4. Add option to remove names.
 5. Reduce spring values to fit all nodes within canvas for users with >400 contacts.
+
+Site functionality:
+1. Prevent page from reloading after clicking tab to home page.
