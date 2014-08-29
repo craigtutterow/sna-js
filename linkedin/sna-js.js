@@ -97,7 +97,7 @@ function structuralholes(Z) {
     var esize = 0;
     var csize = 0;
     var density = 0;
-    var realdensity = 0;
+    var pubdensity = 0;
     var hierarchy = 0;
     var maxedges = (aalen - 1) * (aalen - 2) * 2;
     for (var j = 1; j < aalen; j++) {
@@ -114,13 +114,44 @@ function structuralholes(Z) {
         esize = (aalen - 1) - ((totedges * 2) / (aalen - 1));
         asize = aalen - 1;
     }
+    var betweenness=((aalen-1)*(aalen-2))/2;
+    for(var i=1; i<aalen; i++)
+    {
+        var contacts=[];
+        for (var j=i; j<aalen; j++) //start at i+1?
+        {
+            if(Z[i][j]==1)
+            {
+                betweenness=betweenness-1;
+                contacts.push(j-1) //just j?
+            }
+        }
+        for (var j=i+1; j<aalen; j++) //start at 1?
+        {
+            if(Z[i][j]==0)
+            {
+                var shared=0;
+                for(k=0; k<contacts.length; k++)
+                {
+                    if (Z[j][contacts[k]]==1)
+                    {
+                        shared=shared+1;
+                    }
+                }
+                if (shared>0)
+                {
+                    betweenness=betweenness-(shared/(shared+1));
+                }
+            }
+        }
+    }
     csize = csize * 100;
     density = density * 100;
-    realdensity=totedges/((aalen-1)*(aalen-2))/2*100;
+    pubdensity=totedges/((aalen-1)*(aalen-2))/2*100;
     hierarchy = hierarchy * 100;
     constraint = csize + density + hierarchy;
     var asize = aalen - 1;
-    var Csdhe = { constraint: constraint, csize: csize, density: density, hierarchy: hierarchy, esize: esize, asize: asize, realdensity: realdensity};
+    var Csdhe = { constraint: constraint, csize: csize, density:density, hierarchy: hierarchy, esize: esize, asize: asize, pubdensity: pubdensity, betweenness: betweenness};
     return Csdhe;
 }
 
@@ -141,7 +172,7 @@ function processMatrix(matrix) {
     ;
     document.getElementById('esize_output').innerHTML = 
         "<b><font size=6.5px>" + holes.esize.toFixed(1) + "</b></font>" +
-        "; This is the 'effective size' of your network. Not every contact counts the same or adds the same value to your network. Some ties are 'redundant' because you both know all of the same people. They are not necessarily giving you unique information. So this measure controls for that fact and gives a more conservative estimate of unique contacts.<br>"
+        "; This is the 'effective size' of your network. Not every contact counts the same or adds the same value to your network. Some ties are 'redundant' because you both know all of the same people. They are not necessarily giving you unique information. This measure controls for that fact and gives an estimate of the unique number of clusters you are connected to.<br>"
             + "<br>"
     ;
     document.getElementById('constraint_output').innerHTML = 
@@ -150,8 +181,8 @@ function processMatrix(matrix) {
             + "<br>"
     ;
     document.getElementById('density_output').innerHTML = 
-        "<b><font size=6.5px>" + holes.realdensity.toFixed(2) + "</b></font>" +
-        "/100; This is a percentage that represents the number of ties between your contacts divided by the total number of possible ties (i.e. how 'dense' or closed your network is). As the number approaches 100, it means that all of your contacts know each other. As it approaches 0, it means all of your contacts are disconnected from each other. This can be good or bad depending on the task and social environment.<br>"
+        "<b><font size=6.5px>" + holes.pubdensity.toFixed(2) + "</b></font>" +
+        "/100; This is a percentage that represents the number of ties between your contacts divided by the total number of possible ties (i.e. how 'dense' or closed your network is). As the number approaches 100, it means that all of your contacts know each other. As it approaches 0, it means all of your contacts are disconnected from each other. Having a closed network can be good or bad depending on the task and social environment.<br>"
             + "<br>"
     ;
      document.getElementById('hierarchy_output').innerHTML = 
@@ -159,7 +190,11 @@ function processMatrix(matrix) {
         "/100; This number is a concentration index that represents how dependent you are on a few focal contacts. If all of your contacts know you through your boss or parent, then you have a 'hierarchical' network, and are dependent on them. This can work well in situations where you are considered an 'outsider' and need a strategic partner to get in the door, but is generally considered a handicap.<br>"
             + "<br>"
     ;
-
+     document.getElementById('betweenness_output').innerHTML = 
+        "<b><font size=6.5px>" + holes.betweenness.toFixed(1) + "</b></font>" +
+        "; This number represents the number of structural holes, or bridging opportunities, to which you have exclusive access. You have exclusive access to a structural hole if you lie on the shortest path between two contacts in your network. If others in your network lie on an equidistant path between the two contacts, then you each own a proportional amount. This number is typically quite large, and is presented in raw form in order to emphasize the opportunities you have to move information between people in your network who don't know each other.<br>"
+            + "<br>"
+    ;
     console.log("JSON: " + JSON.stringify(holes));
     new socilabAnalysisReport(holes).save().getPercentile(function (data) {
         $("#percentiles").show();
