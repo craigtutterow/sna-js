@@ -204,6 +204,7 @@ function processMatrix(matrix) {
         $("#p_esize span").text(data.esize.toFixed(2)  + "%");
         $("#p_density span").text(data.density.toFixed(2)  + "%");
         $("#p_csize span").text(data.csize.toFixed(2)  + "%");
+        $("#p_betweenness span").text(data.betweenness.toFixed(2)  + "%");
 
         $("#p_constraint div.bar").css({width: data.constraint.toFixed(2)  + "%"});
         $("#p_hierarchy div.bar").css({width: data.hierarchy.toFixed(2)  + "%"});
@@ -211,6 +212,7 @@ function processMatrix(matrix) {
         $("#p_esize div.bar").css({width: data.esize.toFixed(2)  + "%"});
         $("#p_density div.bar").css({width: data.density.toFixed(2)  + "%"});
         $("#p_csize div.bar").css({width: data.csize.toFixed(2)  + "%"});
+        $("#p_betweenness div.bar").css({width: data.betweenness.toFixed(2)  + "%"});
     });
     try {
         loader.hide();
