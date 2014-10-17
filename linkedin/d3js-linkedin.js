@@ -16,6 +16,7 @@ function visualizeConnections(data, enableConnectionsToSelf, colorization) {
     var showText = true;
 
     //console.log('nodes', ggraph.nodes());
+    //console.log('links', JSON.stringify(ggraph.links());
     //console.log('description', ggraph.description());
 
     var color = d3.scale.category20();
@@ -38,8 +39,8 @@ function visualizeConnections(data, enableConnectionsToSelf, colorization) {
         .size([width, height])
         //.linkDistance(linkDistance)
         .linkStrength(function(d) { return (d.source.id && d.target.id) ? d.value * defaultLinkStrength : d.value * myLinkStrength; } )
-        .charge(-1000)
-		.gravity(.6)
+        .charge(-900)
+		.gravity(.8)
         //.on("tick", tick)
         .start();
 
