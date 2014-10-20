@@ -47,8 +47,14 @@ function visualizeConnections(data, enableConnectionsToSelf, colorization) {
     d3.select("body").selectAll("svg").remove();
     var svg = d3.select("div#d3_viewport").append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)        
+        .call(d3.behavior.zoom()
+        .on("zoom", redraw))
+        .append("g");
 
+    function redraw() {
+        svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
 
     // add the links and the arrows
     var glink = svg.selectAll(".link")
