@@ -16,6 +16,5 @@ Features to add to visualization:
 4. Add option to remove names.
 
 Site functionality:
-1. Prevent page from reloading after clicking tab to home page.
-2. Add messaging
-3. Add facebook support
+1. Prevent page from reloading after clicking tab to home page (jquery).
+2. Add facebook support
