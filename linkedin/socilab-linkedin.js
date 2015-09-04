@@ -9,8 +9,17 @@ var byName = function (d) {
 var byIndustry = function (d) {
     return d.industry;
 };
+var byCountryCode = function (d) {
+    return d.location.country.code;
+};
 var byLocation = function (d) {
-    return d.location;
+	var result = "";
+	if (d.location.contry.code !== 'undefined') {
+		result = d.location.name + ", " + d.location.contry.code;
+	} else {
+		result = d.location.name;
+	}
+	return result;
 };
 var colorization = byIndustry;
 
@@ -238,7 +247,21 @@ function mutualConnectsToReducedMatrix(mutualconnects) {
 
 $(function () {
     $("input[name=radio1]").click(function () {
-        colorization = (this.value == "industry") ? byIndustry : byName;
+		switch (this.value) {
+			case "industry":
+				colorization = byIndustry;
+				break;
+			case "name":
+				colorization = byName;
+				break;
+			case "countryCode":
+				colorization = byCountryCode;
+				break;
+			case "location": colorization = byLocation;
+				break;
+			default:
+				colorization = byIndustry;
+		}
         visualizeConnections(currentData, enableConnectionsToSelf, colorization);
     });
 
