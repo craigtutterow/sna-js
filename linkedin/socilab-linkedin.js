@@ -14,8 +14,8 @@ var byCountryCode = function (d) {
 };
 var byLocation = function (d) {
 	var result = "";
-	if (d.location.contry.code !== 'undefined') {
-		result = d.location.name + ", " + d.location.contry.code;
+	if (d.location.country.code !== 'undefined') {
+		result = d.location.name + ", " + d.location.country.code;
 	} else {
 		result = d.location.name;
 	}
