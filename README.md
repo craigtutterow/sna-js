@@ -21,3 +21,4 @@ Takes in 2D adjacency matrix from socilab-linkedin.js and performs egocentric ne
 
 ----
 **Author**: *Craig Tutterow*
+Contributors: [LJNielsenDk](https://github.com/LJNielsenDk), [kushal-likhi](https://github.com/kushal-likhi), 
