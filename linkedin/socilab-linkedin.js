@@ -142,14 +142,11 @@ function setConnections(connections) {
     }
 
     var connectionLimit = 499; //this is the max, as per linkedin api - after this many calls that user gets throttled/capped for the day until midnight UTC time
-    var publicConnections = connections.filter(function (d) {
-        return d.id != "private";
-    });
 
     var connectsLength = Math.min(publicConnections.length, connectionLimit);
     $("#message").text((connectsLength < publicConnections.length) ? "Due to LinkedIn API limitations - we can only use " + connectionLimit + " of your contacts" : "");
 
-    var mutualconnects = new Array(connectsLength);
+    var mutualconnects;
     var connectionIdIndexMap = {};
     publicConnections.forEach(function (connection, connectionIndex) {
         connectionIdIndexMap[connection.id] = connectionIndex;
@@ -158,51 +155,62 @@ function setConnections(connections) {
         return connectionIdIndexMap[d.id];
     };
 
-    var resultsLeftToArrive = connectsLength;
     var errorCount = 0;
     var callsMade = 0;
 
-    publicConnections.forEach(function (connection, connectionIndex) {
-        if (resultsLeftToArrive <= 0) {
-            return;
+    async.map(publicConnections.slice(0, connectsLength), function (connection, callback) {
+        var arr = [];
+
+        function fetch(offset, callback) {
+            callsMade++;
+            console.log("[Paginated] Making call #" + callsMade);
+            IN.API.Raw(
+                "/people/" + connection.id +
+                "/relation-to-viewer/related-connections" +
+                "?format=json" +
+                "&start=" + offset +
+                '&count=' + 99 
+            )
+                .result(function (result) {
+                    arr.push.apply(arr, (result.values ? result.values.map(getConnectionIndexById).
+                        filter(function (d) {
+                            return d != null && d <= connectsLength;
+                        }) : []) || []);
+                    if (result.values && result.values.length) fetch(offset + result.values.length + 1, callback);
+                    else callback(null, arr);
+                })
+                .error(function (error) {
+                    console.log(error);
+                    errorCount++;
+                    callback(null, arr);
+                });
         }
 
+        fetch(0, callback);
 
-        var resultHandler = function () {
-            console.log("All results arrived");
-            if (errorCount > 0) {
-                console.warn("Querying contacts has produced " + errorCount + " error" + (errorCount == 1 ? "" : "s"));
-            }
-
-            var sociomat = mutualConnectsToMatrix(mutualconnects);
-            var reducedSociomat = mutualConnectsToReducedMatrix(mutualconnects);
-            var resultData = { connections: connections, publicConnections: publicConnections, matrix: sociomat, reducedMatrix: reducedSociomat };
-            console.log("SOCIOMAT", sociomat);
-            dataReady(resultData);
+    }, function (err, results) {
+        mutualconnects = results;
+        console.log("All results arrived");
+        if (errorCount > 0) {
+            console.warn("Querying contacts has produced " + errorCount + " error" + (errorCount == 1 ? "" : "s"));
         }
 
-        callsMade++;
-        console.log("Making call #" + callsMade);
+        var sociomat = mutualConnectsToMatrix(mutualconnects);
+        var reducedSociomat = mutualConnectsToReducedMatrix(mutualconnects);
+        var resultData = {
+            connections: connections,
+            publicConnections: publicConnections,
+            matrix: sociomat,
+            reducedMatrix: reducedSociomat
+        };
+        console.log("SOCIOMAT", sociomat);
+        try {
+            console.log('saving to local storage');
+            localStorage.setItem(inId, JSON.stringify(resultData));
+        } catch (c) {
 
-        IN.API.Raw("/people/" + connection.id + "/relation-to-viewer/related-connections?count=99") //99 is the maximum number of mutual connections requests per contact
-            .result(function (result) {
-                mutualconnects[connectionIndex] = (result.values ? result.values.map(getConnectionIndexById).
-                    filter(function (d) {
-                        return d != null && d <= connectsLength;
-                    }) : []) || [];
-                resultsLeftToArrive--;
-                if (resultsLeftToArrive == 0) {  // if all arrived
-                    resultHandler();
-                }
-            })
-            .error(function (error) {
-                errorCount++;
-                mutualconnects[connectionIndex] = [];
-                resultsLeftToArrive--;
-                if (resultsLeftToArrive == 0) {  // if all arrived
-                    resultHandler();
-                }
-            });
+        }
+        dataReady(resultData);
     });
 }
 
