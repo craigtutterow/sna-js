@@ -3,7 +3,7 @@ sna-js
 
 This repository contains javascript code that interact with social network APIs, generate D3.js visualizations, and calculate relevant metrics for **social network analysis**. 
 
-You can see it in use at: http://socilab.com. Socilab is a social network utility that allows users to visualize, analyze, and download data on their LinkedIn network.
+You can see it in use at: http://socilab.com. Socilab is a social network utility that allows users to visualize, analyze, and download data on their LinkedIn network. It has been used for in class tutorials at a number of universities - including Carnegie Mellon, Cornell, Dartmouth, London Business School, University of Sydney, among others, and is featured on datasciencemasters.org.
 
 I am actively developing this as users request more features and look forward to collaborating to anyone who shares an interest in **making network data and analysis more accessible to end users**.
 
