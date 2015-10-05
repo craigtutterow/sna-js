@@ -14,6 +14,7 @@ A dynamic and interactive visualization of a user's LinkedIn network using the d
 
 ###socilab-linkedin.js:
 Methods for interacting with LinkedIn API to gather network data for display, analysis, and download by user.
+
 **Note on LinkedIn API functionality**: LinkedIn's public API no longer supports the related-connections request that this script relies on. LinkedIn was courteous enough to extend socilab's access to the prior functionality while our partnership application is pending review. I do not have a timeline for when the application will be processed, but any contributions made here in the meantime can be implemented on the public site so long as they comply with the terms.
 
 ###sna-js.js:
