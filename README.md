@@ -9,13 +9,13 @@ I am actively developing this as users request more features and look forward to
 
 LinkedIn
 ------
-###sna-js.js:
+### sna-js.js:
 Takes in 2D adjacency matrix from socilab-linkedin.js and performs egocentric network calculations for social network analysis.
 
-###d3js-linkedin.js:
+### d3js-linkedin.js:
 A dynamic and interactive visualization of a user's LinkedIn network using the d3js library, with options to enable/disable connections to ego and color nodes by industry.
 
-###socilab-linkedin.js:
+### socilab-linkedin.js:
 Methods for interacting with LinkedIn API to gather network data for display, analysis, and download by user.
 
 **Note on LinkedIn API functionality**: LinkedIn's public API no longer supports the related-connections request that this script relies on. LinkedIn was courteous enough to extend socilab's access to the prior functionality while our partnership application is pending review. I do not have a timeline for when the application will be processed, but any contributions made here in the meantime can be implemented on the public site so long as they comply with the terms.
