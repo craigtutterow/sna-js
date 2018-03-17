@@ -10,7 +10,11 @@ var byIndustry = function (d) {
     return d.industry;
 };
 var byCountryCode = function (d) {
-    return d.location.country.code;
+    var result = "";
+    if (d.location !== 'undefined') {
+        result = d.location.country.code;
+    }
+    return result;
 };
 var byLocation = function (d) {
 	var result = "";
